@@ -50,6 +50,8 @@ GATTS = {
                 CONTROLLER_INDEX),
     "start_server": (defs.BTP_SERVICE_ID_GATT, defs.BTP_GATT_CMD_START_SERVER,
                      CONTROLLER_INDEX, ""),
+    "reset_server": (defs.BTP_SERVICE_ID_GATT, defs.BTP_GATT_CMD_RESET_SERVER,
+                     CONTROLLER_INDEX, ""),
     "add_inc_svc": (defs.BTP_SERVICE_ID_GATT,
                     defs.BTP_GATT_CMD_ADD_INCLUDED_SERVICE, CONTROLLER_INDEX),
     "add_char": (defs.BTP_SERVICE_ID_GATT, defs.BTP_GATT_CMD_ADD_CHARACTERISTIC,
@@ -307,6 +309,16 @@ def gatts_start_server():
 
     iutctl = get_iut()
     iutctl.btp_socket.send(*GATTS['start_server'])
+
+    gatt_command_rsp_succ()
+
+
+def gatts_reset_server():
+    """Reset the dynamic GATT server database without a command payload."""
+    logging.debug("")
+
+    iutctl = get_iut()
+    iutctl.btp_socket.send(*GATTS['reset_server'])
 
     gatt_command_rsp_succ()
 

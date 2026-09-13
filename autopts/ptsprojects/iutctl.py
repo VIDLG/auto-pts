@@ -242,8 +242,13 @@ class IutCtl:
                 f"{self.tty_file},raw,b{self.tty_baudrate},{flow_control}"
             )
         else:
+            baud_options = (
+                f"ispeed={self.tty_baudrate},ospeed={self.tty_baudrate}"
+                if sys.platform == "darwin"
+                else f"b{self.tty_baudrate}"
+            )
             socat_cmd = (
-                f"socat -x -v {self.tty_file},rawer,b{self.tty_baudrate},{flow_control} UNIX-CONNECT:{self.btp_address}"
+                f"socat -x -v {self.tty_file},rawer,{baud_options},{flow_control} UNIX-CONNECT:{self.btp_address}"
             )
 
         log(f"Starting socat process: {socat_cmd}")
