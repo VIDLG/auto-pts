@@ -48,6 +48,14 @@ Over 630 test cases have been automated for Zephyr OS and Mynewt OS which reduce
 
 **Bluetooth Test Protocol (BTP)**: Used to communicate with the IUT. See `doc/btp_spec.txt`
 
+### BleHub fixture control plane
+
+BleHub adds a read-only vendor control-plane extension in
+`autopts.pybtp.btp.blehub`: `vendor/0x01/index=0xff` returns a strict installed-image
+attestation document. The extension is only a transport and codec boundary. It does not flash,
+reset, provision, select an RF flow, or own fixture lifecycle; those operations remain in the
+explicit host controller. Unknown, malformed, duplicate, or truncated responses fail closed.
+
 # Linux Prerequisites
 
 For auto-pts client under Linux:
